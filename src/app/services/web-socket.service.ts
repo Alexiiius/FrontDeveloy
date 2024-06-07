@@ -36,13 +36,11 @@ export class WebSocketService {
       broadcaster: 'reverb',
       key: 'ixyw7gpei8mjty0vi0n5',
       wsHost: 'meetoplay.duckdns.org',
-      wsPort: 443,
+      wsPort: 8085,
       wssPort: 443,
       forceTLS: false,
       enabledTransports: ['ws', 'wss'],
-    })
-    console.log(this.Echo)
-    ;
+    });
 
     this.Echo.channel(`public`).listen('GlobalMessage', (e: any) => {
       console.log("From public channel");
@@ -57,7 +55,7 @@ export class WebSocketService {
         broadcaster: 'reverb',
         key: 'ixyw7gpei8mjty0vi0n5',
         wsHost: 'meetoplay.duckdns.org',
-        wsPort: 443,
+        wsPort: 8085,
         wssPort: 443,
         forceTLS: false,
         enabledTransports: ['ws', 'wss'],
@@ -67,9 +65,7 @@ export class WebSocketService {
           },
         },
         authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
-      })
-      console.log(this.Echo)
-      ;
+      });
 
 
       this.privateMessagesChannel = `App.Models.User.${userId}`;
