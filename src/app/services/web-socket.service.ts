@@ -38,7 +38,7 @@ export class WebSocketService {
       wsHost: '35.173.106.192',
       wsPort: 8085,
       wssPort: 443,
-      forceTLS: false,
+      forceTLS: true,
       enabledTransports: ['ws', 'wss'],
     });
 
@@ -57,7 +57,7 @@ export class WebSocketService {
         wsHost: '35.173.106.192',
         wsPort: 8085,
         wssPort: 443,
-        forceTLS: false,
+        forceTLS: true,
         enabledTransports: ['ws', 'wss'],
         auth: {
           headers: {
