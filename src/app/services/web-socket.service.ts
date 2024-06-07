@@ -35,11 +35,11 @@ export class WebSocketService {
     this.Echo = new Echo({
       broadcaster: 'reverb',
       key: 'ixyw7gpei8mjty0vi0n5',
-      wsHost: 'meetoplay.duckdns.org',
+      wsHost: '35.173.106.192',
       wsPort: 8085,
-      wssPort: 443,
-      forceTLS: true,
-      enabledTransports: ['ws', 'wss'],
+      wssPort: 8085,
+      forceTLS: false,
+      enabledTransports: ['ws'],
     });
 
     this.Echo.channel(`public`).listen('GlobalMessage', (e: any) => {
@@ -54,11 +54,11 @@ export class WebSocketService {
       this.Echo = new Echo({
         broadcaster: 'reverb',
         key: 'ixyw7gpei8mjty0vi0n5',
-        wsHost: 'meetoplay.duckdns.org',
+        wsHost: '35.173.106.192',
         wsPort: 8085,
-        wssPort: 443,
-        forceTLS: true,
-        enabledTransports: ['ws', 'wss'],
+        wssPort: 8085,
+        forceTLS: false,
+        enabledTransports: ['ws'],
         auth: {
           headers: {
             'Authorization': 'Bearer ' + this.token,
