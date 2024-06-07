@@ -64,7 +64,7 @@ export class WebSocketService {
             'Authorization': 'Bearer ' + this.token,
           },
         },
-        authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
+        authEndpoint: `http://meetoplay.duckdns.org/api/broadcasting/auth`
       });
 
 
