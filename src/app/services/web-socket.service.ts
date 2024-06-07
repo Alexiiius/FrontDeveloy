@@ -37,9 +37,9 @@ export class WebSocketService {
       key: 'ixyw7gpei8mjty0vi0n5',
       wsHost: '35.173.106.192',
       wsPort: 8085,
-      wssPort: 8085,
+      wssPort: 443,
       forceTLS: false,
-      enabledTransports: ['ws'],
+      enabledTransports: ['ws', 'wss'],
     });
 
     this.Echo.channel(`public`).listen('GlobalMessage', (e: any) => {
@@ -56,15 +56,15 @@ export class WebSocketService {
         key: 'ixyw7gpei8mjty0vi0n5',
         wsHost: '35.173.106.192',
         wsPort: 8085,
-        wssPort: 8085,
+        wssPort: 443,
         forceTLS: false,
-        enabledTransports: ['ws'],
+        enabledTransports: ['ws', 'wss'],
         auth: {
           headers: {
             'Authorization': 'Bearer ' + this.token,
           },
         },
-        authEndpoint: `http://meetoplay.duckdns.org/api/broadcasting/auth`
+        authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
       });
 
 
