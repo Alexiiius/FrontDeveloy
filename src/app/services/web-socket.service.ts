@@ -38,9 +38,11 @@ export class WebSocketService {
       wsHost: 'meetoplay.duckdns.org',
       wsPort: 443,
       wssPort: 443,
-      forceTLS: true,
+      forceTLS: false,
       enabledTransports: ['ws', 'wss'],
-    });
+    })
+    console.log(this.Echo)
+    ;
 
     this.Echo.channel(`public`).listen('GlobalMessage', (e: any) => {
       console.log("From public channel");
@@ -57,7 +59,7 @@ export class WebSocketService {
         wsHost: 'meetoplay.duckdns.org',
         wsPort: 443,
         wssPort: 443,
-        forceTLS: true,
+        forceTLS: false,
         enabledTransports: ['ws', 'wss'],
         auth: {
           headers: {
@@ -65,7 +67,9 @@ export class WebSocketService {
           },
         },
         authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
-      });
+      })
+      console.log(this.Echo)
+      ;
 
 
       this.privateMessagesChannel = `App.Models.User.${userId}`;
