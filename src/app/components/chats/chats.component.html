@@ -1,0 +1,5 @@
+<div class="flex flex-col gap-2">
+  @for (chat of chats; track chat.user.id) {
+    <app-chat-card [chat]="chat" (click)="navigateToChatWithUser(chat)"/>
+  }
+</div>
