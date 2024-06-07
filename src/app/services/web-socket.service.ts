@@ -36,9 +36,9 @@ export class WebSocketService {
       broadcaster: 'reverb',
       key: 'ixyw7gpei8mjty0vi0n5',
       wsHost: 'meetoplay.duckdns.org',
-      wsPort: 8085,
+      wsPort: 443,
       wssPort: 443,
-      forceTLS: false,
+      forceTLS: true,
       enabledTransports: ['ws', 'wss'],
     });
 
@@ -55,9 +55,9 @@ export class WebSocketService {
         broadcaster: 'reverb',
         key: 'ixyw7gpei8mjty0vi0n5',
         wsHost: 'meetoplay.duckdns.org',
-        wsPort: 8085,
+        wsPort: 443,
         wssPort: 443,
-        forceTLS: false,
+        forceTLS: true,
         enabledTransports: ['ws', 'wss'],
         auth: {
           headers: {
