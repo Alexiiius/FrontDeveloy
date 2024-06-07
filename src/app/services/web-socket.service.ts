@@ -39,7 +39,7 @@ export class WebSocketService {
       wsPort: 8085,
       wssPort: 8085,
       forceTLS: false,
-      enabledTransports: ['ws', 'wss'],
+      enabledTransports: ['ws'],
     });
 
     this.Echo.channel(`public`).listen('GlobalMessage', (e: any) => {
@@ -58,7 +58,7 @@ export class WebSocketService {
         wsPort: 8085,
         wssPort: 8085,
         forceTLS: false,
-        enabledTransports: ['ws', 'wss'],
+        enabledTransports: ['ws'],
         auth: {
           headers: {
             'Authorization': 'Bearer ' + this.token,
