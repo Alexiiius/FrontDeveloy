@@ -35,7 +35,7 @@ export class WebSocketService {
     this.Echo = new Echo({
       broadcaster: 'reverb',
       key: 'ixyw7gpei8mjty0vi0n5',
-      wsHost: '35.173.106.192',
+      wsHost: 'meetoplay.duckdns.org',
       wsPort: 8085,
       wssPort: 8085,
       forceTLS: false,
@@ -54,7 +54,7 @@ export class WebSocketService {
       this.Echo = new Echo({
         broadcaster: 'reverb',
         key: 'ixyw7gpei8mjty0vi0n5',
-        wsHost: '35.173.106.192',
+        wsHost: 'meetoplay.duckdns.org',
         wsPort: 8085,
         wssPort: 8085,
         forceTLS: false,
