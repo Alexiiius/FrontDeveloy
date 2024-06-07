@@ -36,10 +36,10 @@ export class WebSocketService {
       broadcaster: 'reverb',
       key: 'ixyw7gpei8mjty0vi0n5',
       wsHost: 'meetoplay.duckdns.org',
-      wsPort: 443,
+      wsPort: 8085,
       wssPort: 443,
-      forceTLS: true,
-      enabledTransports: ['ws', 'wss'],
+      forceTLS: false,
+      enabledTransports: ['ws'],
     });
 
     this.Echo.channel(`public`).listen('GlobalMessage', (e: any) => {
@@ -55,10 +55,10 @@ export class WebSocketService {
         broadcaster: 'reverb',
         key: 'ixyw7gpei8mjty0vi0n5',
         wsHost: 'meetoplay.duckdns.org',
-        wsPort: 443,
-        wssPort: 443,
+        wsPort: 8085,
+        wssPort: false,
         forceTLS: true,
-        enabledTransports: ['ws', 'wss'],
+        enabledTransports: ['ws'],
         auth: {
           headers: {
             'Authorization': 'Bearer ' + this.token,
