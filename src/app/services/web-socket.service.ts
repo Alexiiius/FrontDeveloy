@@ -57,7 +57,7 @@ export class WebSocketService {
         wsHost: 'meetoplay.duckdns.org',
         wsPort: 8085,
         wssPort: 443,
-        forceTLS: false,
+        forceTLS: true,
         enabledTransports: ['ws', 'wss'],
         auth: {
           headers: {
