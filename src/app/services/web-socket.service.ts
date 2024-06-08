@@ -37,7 +37,7 @@ export class WebSocketService {
       key: 'ixyw7gpei8mjty0vi0n5',
       wsHost: 'meetoplay.duckdns.org',
       wsPort: 8085,
-      wssPort: 8085,
+      wssPort: 443,
       forceTLS: false,
       enabledTransports: ['ws', 'wss'],
     });
@@ -56,7 +56,7 @@ export class WebSocketService {
         key: 'ixyw7gpei8mjty0vi0n5',
         wsHost: 'meetoplay.duckdns.org',
         wsPort: 8085,
-        wssPort: 8085,
+        wssPort: 443,
         forceTLS: false,
         enabledTransports: ['ws', 'wss'],
         auth: {
