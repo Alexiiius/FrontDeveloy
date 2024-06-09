@@ -48,66 +48,45 @@ export class WebSocketService {
     });
   }
 
-  setupEchoPrivate(userId: number) {
-
-    if (!this.privateDone) {
-      this.Echo = new Echo({
-        broadcaster: 'reverb',
-        key: 'ixyw7gpei8mjty0vi0n5',
-        wsHost: 'meetoplay.duckdns.org',
-        wsPort: 8085,
-        wssPort: 443,
-        forceTLS: false,
-        enabledTransports: ['ws', 'wss'],
-        auth: {
-          headers: {
-            'Authorization': 'Bearer ' + this.token,
-          },
-        },
-        authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
-      });
-
-
-      this.privateMessagesChannel = `App.Models.User.${userId}`;
-
+  setupEcho(userId: number, host: string) {
+    return new Promise((resolve, reject) => {
       try {
-        this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
-            console.log("From private channel");
-            console.log(response);
-    
-            this.privateMessageSource.next(response.message);
-        });
-    } catch (error) {
-        console.error('Error in private channel:', error);
-    
-        // Cambiar wsHost
-        this.Echo = new Echo({
-          broadcaster: 'reverb',
-          key: 'ixyw7gpei8mjty0vi0n5',
-          wsHost: '35.173.106.192',
-          wsPort: 8085,
-          wssPort: 443,
-          forceTLS: false,
-          enabledTransports: ['ws', 'wss'],
-          auth: {
-            headers: {
-              'Authorization': 'Bearer ' + this.token,
+        if (!this.privateDone) {
+          this.Echo = new Echo({
+            broadcaster: 'reverb',
+            key: 'ixyw7gpei8mjty0vi0n5',
+            wsHost: host,
+            wsPort: 8085,
+            wssPort: 8085,
+            forceTLS: false,
+            enabledTransports: ['ws'],
+            auth: {
+              headers: {
+                'Authorization': 'Bearer ' + this.token,
+              },
             },
-          },
-          authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
-        });
-    
-        // Intentar de nuevo
-        this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
+            authEndpoint: `http://${host}/api/broadcasting/auth`
+          });
+  
+          this.privateMessagesChannel = `App.Models.User.${userId}`;
+  
+          this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
             console.log("From private channel");
             console.log(response);
-    
+  
             this.privateMessageSource.next(response.message);
-        });
-    }
-
-      this.privateDone = true;
-    }
+          });
+  
+          this.privateDone = true;
+          resolve();
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
-
-}
+  
+  setupEchoPrivate(userId: number) {
+    this.setupEcho(userId, 'meetoplay.duckdns.org')
+      .catch(() => this.setupEcho(userId, '35.173.106.192'));
+  }
