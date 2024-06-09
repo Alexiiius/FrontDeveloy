@@ -8,6 +8,7 @@
 //  sudo cat /var/log/websocket.out.log
 
 // cat /var/log/laravel_queue.out.log
+// cat /var/log/laravel_queue.err.log
 
 export const backAPIUrl = 'https://meetoplay.duckdns.org/api';
 export const gamesApiUrl = 'https://meetoplay-externa.duckdns.org/api';
