@@ -57,15 +57,15 @@ export class WebSocketService {
             key: 'ixyw7gpei8mjty0vi0n5',
             wsHost: host,
             wsPort: 8085,
-            wssPort: 8085,
+            wssPort: 443,
             forceTLS: false,
-            enabledTransports: ['ws'],
+            enabledTransports: ['ws', 'wss'],
             auth: {
               headers: {
                 'Authorization': 'Bearer ' + this.token,
               },
             },
-            authEndpoint: `http://${host}/api/broadcasting/auth`
+            authEndpoint: `https://${host}/api/broadcasting/auth`
           });
 
           this.privateMessagesChannel = `App.Models.User.${userId}`;
