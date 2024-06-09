@@ -70,12 +70,41 @@ export class WebSocketService {
 
       this.privateMessagesChannel = `App.Models.User.${userId}`;
 
-      this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
-        console.log("From private channel");
-        console.log(response);
-
-        this.privateMessageSource.next(response.message);
-      });
+      try {
+        this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
+            console.log("From private channel");
+            console.log(response);
+    
+            this.privateMessageSource.next(response.message);
+        });
+    } catch (error) {
+        console.error('Error in private channel:', error);
+    
+        // Cambiar wsHost
+        this.Echo = new Echo({
+          broadcaster: 'reverb',
+          key: 'ixyw7gpei8mjty0vi0n5',
+          wsHost: '35.173.106.192',
+          wsPort: 8085,
+          wssPort: 443,
+          forceTLS: false,
+          enabledTransports: ['ws', 'wss'],
+          auth: {
+            headers: {
+              'Authorization': 'Bearer ' + this.token,
+            },
+          },
+          authEndpoint: `https://meetoplay.duckdns.org/api/broadcasting/auth`
+        });
+    
+        // Intentar de nuevo
+        this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
+            console.log("From private channel");
+            console.log(response);
+    
+            this.privateMessageSource.next(response.message);
+        });
+    }
 
       this.privateDone = true;
     }
