@@ -48,40 +48,44 @@ export class WebSocketService {
     });
   }
 
-  setupEcho(userId: number, host: string) {
+  setupEcho(userId: number, host: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      try {
-        if (!this.privateDone) {
-          this.Echo = new Echo({
-            broadcaster: 'reverb',
-            key: 'ixyw7gpei8mjty0vi0n5',
-            wsHost: host,
-            wsPort: 8085,
-            wssPort: 443,
-            forceTLS: false,
-            enabledTransports: ['ws', 'wss'],
-            auth: {
-              headers: {
-                'Authorization': 'Bearer ' + this.token,
-              },
+      if (!this.privateDone) {
+        this.Echo = new Echo({
+          broadcaster: 'reverb',
+          key: 'ixyw7gpei8mjty0vi0n5',
+          wsHost: host,
+          wsPort: 8085,
+          wssPort: 443,
+          forceTLS: true,
+          enabledTransports: ['ws', 'wss'],
+          auth: {
+            headers: {
+              'Authorization': 'Bearer ' + this.token,
             },
-            authEndpoint: `https://${host}/api/broadcasting/auth`
+          },
+          authEndpoint: `https://${host}/api/broadcasting/auth`
+        });
+
+        if (this.Echo && this.Echo.connector && this.Echo.connector.socket) {
+          this.Echo.connector.socket.on('connect_error', (error: any) => {
+            reject(error);
           });
-
-          this.privateMessagesChannel = `App.Models.User.${userId}`;
-
-          this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
-            console.log("From private channel");
-            console.log(response);
-
-            this.privateMessageSource.next(response.message);
-          });
-
-          this.privateDone = true;
-          resolve();
+        } else {
+          reject(new Error('Socket is not defined'));
         }
-      } catch (error) {
-        reject(error);
+
+        this.privateMessagesChannel = `App.Models.User.${userId}`;
+
+        this.Echo.private(this.privateMessagesChannel).listen('GotMessage', (response: any) => {
+          console.log("From private channel");
+          console.log(response);
+
+          this.privateMessageSource.next(response.message);
+        });
+
+        this.privateDone = true;
+        resolve();
       }
     });
   }
