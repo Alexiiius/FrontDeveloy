@@ -1,11 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { WebSocketService } from './services/web-socket.service';
+import { AlertComponent } from './components/main/alert/alert.component';
+import { AlertService } from './services/alert.service';
+import { EmailVerifiedService } from './services/email-verified.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,7 @@ import { WebSocketService } from './services/web-socket.service';
     HttpClientModule,
     SplashScreenComponent,
     CommonModule,
+    AlertComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -22,11 +25,9 @@ import { WebSocketService } from './services/web-socket.service';
     trigger('fade', [
       state('visible', style({
         opacity: 1,
-        display: 'block'
       })),
       state('hidden', style({
         opacity: 0,
-        display: 'none'
       })),
       transition('visible => hidden', animate('1000ms ease-out')),
     ])
@@ -35,14 +36,23 @@ import { WebSocketService } from './services/web-socket.service';
 export class AppComponent implements OnInit {
   title = 'MeetoPlay';
 
-
   authService = inject(AuthService);
+  alertService = inject(AlertService);
+  route = inject(ActivatedRoute);
+  emailVerificationService = inject(EmailVerifiedService);
 
   splashScreenVisible = 'visible';
 
   constructor() { }
 
   ngOnInit(): void {
+    this.route.data.subscribe(data => {
+      if (data['verifiedEmail'] === true) {
+        this.emailVerificationService.verifiedEmail = true;
+        console.log('Email verified');
+      }
+    });
+
     console.log('Checking token');
     const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
     if (token) {

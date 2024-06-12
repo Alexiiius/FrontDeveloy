@@ -6,6 +6,9 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/rout
 import { loginAnimation, registerAnimation } from './login-register-animation';
 import { set } from 'date-fns';
 import { UserService } from '../../services/user.service';
+import { EmailVerifiedService } from '../../services/email-verified.service';
+import { AlertService } from '../../services/alert.service';
+import { AlertComponent } from '../main/alert/alert.component';
 
 @Component({
   selector: 'app-login-register',
@@ -13,7 +16,8 @@ import { UserService } from '../../services/user.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    AlertComponent
   ],
   templateUrl: './login-register.component.html',
   styleUrl: './login-register.component.css',
@@ -35,7 +39,10 @@ export class LoginRegisterComponent implements OnInit {
     (private formBuilder: FormBuilder,
       private authService: AuthService,
       private router: Router,
-      private route: ActivatedRoute) {
+      private route: ActivatedRoute,
+      private emailVerificationService: EmailVerifiedService,
+      private alertService: AlertService
+    ) {
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -45,6 +52,14 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.emailVerificationService.verifiedEmail) {
+      setTimeout(() => {
+        this.alertService.showAlert('info', 'Correo verificado! ✉️✅');
+      }, 3000);
+      console.log('Email verified');
+      this.emailVerificationService.verifiedEmail = false; // reset the state
+    }
+
     this.redirectUrl = this.route.snapshot.queryParamMap.get('redirectUrl') ?? '/main';
 
     this.authService.isAuth$.subscribe({
