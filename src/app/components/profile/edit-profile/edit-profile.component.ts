@@ -113,6 +113,10 @@ export class EditProfileComponent implements OnInit{
   onFileDropped(files: FileList) {
     const file = files.item(0);
     if (file && file.type.startsWith('image/')) {
+      if (file.size > 2000000) { // tamaño en bytes
+        this.alertService.showAlert('error', 'El archivo no puede ser mayor a 2MB');
+        return;
+      }
       this.newAvatar = file;
       this.newAvatarUrl = URL.createObjectURL(this.newAvatar);
     } else {
@@ -123,6 +127,10 @@ export class EditProfileComponent implements OnInit{
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.item(0);
     if (file) {
+      if (file.size > 2000000) { // tamaño en bytes
+        this.alertService.showAlert('error', 'El archivo no puede ser mayor a 2MB');
+        return;
+      }
       this.newAvatar = file;
       this.newAvatarUrl = URL.createObjectURL(this.newAvatar);
     }
