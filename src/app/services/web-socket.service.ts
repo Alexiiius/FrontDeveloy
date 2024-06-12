@@ -54,6 +54,8 @@ export class WebSocketService {
 
       this.publicMessageSource.next(response.message);
     });
+
+    this.publicDone = true;
   }
 
   setupEchoPrivate(userId: number) {
@@ -86,7 +88,6 @@ export class WebSocketService {
     });
 
     this.privateDone = true;
-
   }
 
 }
