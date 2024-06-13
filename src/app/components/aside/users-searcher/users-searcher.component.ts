@@ -83,7 +83,7 @@ export class UsersSearcherComponent implements OnInit {
     this.userService.getUsersSearch(this.search.value || '')
       .pipe(takeUntil(this.searchCanceled))
       .subscribe((results: UserReduced[]) => {
-        this.searchResults = results;
+        this.searchResults = results.filter(user => user.id !== 1 && user.id !== 2);
         this.searchInitiated = true;
         this.checkFollowing();
       });
