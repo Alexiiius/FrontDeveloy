@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { UserReduced } from '../../interfaces/user-reduced';
 import { FormsModule } from '@angular/forms';
 import { ChatsService } from '../../services/chats.service';
@@ -113,6 +113,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addEmoji(event: any) {
     this.message += event.emoji.native;
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.showEmojis = false;
+    }
   }
 
   toggleEmojis() {
@@ -247,6 +254,10 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   sendMessage() {
     if (this.message.trim() === '') {
       return;
+    }
+
+    if(this.showEmojis) {
+      this.showEmojis = false;
     }
 
     const newMessage: LiveMessage = {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { WebSocketService } from '../../../services/web-socket.service';
 import { SocketMessage } from '../../../interfaces/socket-message';
 import { ChatsService } from '../../../services/chats.service';
@@ -122,6 +122,10 @@ export class GlobalChatComponent implements OnInit {
       return;
     }
 
+    if(this.showEmojis) {
+      this.showEmojis = false;
+    }
+
     const newMessage: LivePublicMessage = {
       from_user_id: this.logedUser.id,
       from_user_name: `${this.logedUser.name}#${this.logedUser.tag}`,
@@ -142,6 +146,13 @@ export class GlobalChatComponent implements OnInit {
     this.chatService.sendPublicMessage(text).subscribe((response: any) => {
       console.log('Message sent', response);
     });
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.showEmojis = false;
+    }
   }
 
   toggleEmojis() {
