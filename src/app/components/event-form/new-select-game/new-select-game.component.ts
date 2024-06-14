@@ -42,7 +42,7 @@ export class NewSelectGameComponent implements OnInit, OnDestroy, ControlValueAc
 
   @Input() isInvalid: boolean = false;
   @Input() event: Event;
-  @Input() optionsLimit: number = 5;
+  @Input() optionsLimit: number = 2;
   @Input() gameId: number | undefined = undefined;
 
   private subscriptions: Subscription[] = [];
