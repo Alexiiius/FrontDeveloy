@@ -7,6 +7,8 @@
   grid-column-gap: 20px;
   min-width: 340px;
   overflow-x: hidden;
+  z-index: 60;
+  position: absolute;
 
   &.overlay::before {
     display: none; // muestra el pseudo-elemento cuando se añade la clase 'overlay'
