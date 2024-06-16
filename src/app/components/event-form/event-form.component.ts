@@ -68,7 +68,38 @@ export class EventFormComponent implements OnInit, OnDestroy {
   closeModal() {
     this.modalDialog.nativeElement.close();
     this.eventForm.get('whatForm')?.get('title')?.markAsUntouched()
-    this.eventForm.reset();
+    this.eventForm.reset(
+      {
+        whatForm: {
+          ranked: false,
+          title: '',
+          game: { id: -1, name: '👾 Seleccione un juego', image: '' },
+          gamemode: 'default',
+          platform: 'default'
+        },
+        whenForm: {
+          inscriptionToggle: true,
+          eventBegin: null,
+          eventEnd: null,
+          inscriptionBegin: null,
+          inscriptionEnd: null
+        },
+        whoForm: {
+          privacy: 'default',
+          maxParticipants: null,
+          requirmentsToggle: false,
+          rank: false,
+          maxRank: { value: '', disabled: true },
+          minRank: { value: '', disabled: true },
+          level: false,
+          maxLevel: { value: '', disabled: true },
+          minLevel: { value: '', disabled: true },
+          hoursPlayed: false,
+          maxHours: { value: '', disabled: true },
+          minHours: { value: '', disabled: true }
+        }
+      }
+    );
   }
 
   constructor(
