@@ -63,6 +63,16 @@ export class EventFormComponent implements OnInit, OnDestroy {
 
   openModal() {
     this.modalDialog.nativeElement.showModal();
+
+
+    // Reset radio buttons
+    let whatRadio = document.querySelector('input[aria-label="What?"]') as HTMLInputElement;
+    let whenRadio = document.querySelector('input[aria-label="When?"]') as HTMLInputElement;
+    let whoRadio = document.querySelector('input[aria-label="Who?"]') as HTMLInputElement;
+
+    if (whatRadio) whatRadio.checked = true;
+    if (whenRadio) whenRadio.checked = false;
+    if (whoRadio) whoRadio.checked = false;
   }
 
   closeModal() {
