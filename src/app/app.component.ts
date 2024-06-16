@@ -25,9 +25,11 @@ import { EmailVerifiedService } from './services/email-verified.service';
     trigger('fade', [
       state('visible', style({
         opacity: 1,
+        zIndex: 60
       })),
       state('hidden', style({
         opacity: 0,
+        zIndex: -100
       })),
       transition('visible => hidden', animate('1000ms ease-out')),
     ])
